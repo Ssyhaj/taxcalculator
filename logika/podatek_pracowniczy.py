@@ -9,14 +9,15 @@ class PodatekPracowniczy(ObliczaniePodatku):
     PODATEK_KOSZTOW_UZYSKANIA = 111.25
     PROCENT_PODATKU_ZALICZKOWEGO = 18
     DOCHOD_WOLNY_OD_PODATKU = 46.33
+    PROCENT = 100
     
     def __init__(self, dochod):
         super().__init__(dochod)
     
     def oblicz_podatki_ubezpieczenia_spolecznego(self):
-        self.podatek_ubezpieczenia_spolecznego = (self.dochod * self.PROCENT_PODATKU_UBEZPIECZENIA_SPOLECZNEGO) / 100
-        self.podatek_ubezpieczenia_zdrowotnego_spolecznego = (self.dochod * self.PROCENT_PODATKU_UBEZPIECZENIA_ZDROWOTNEGO_SPOLECZNEGO) / 100
-        self.podatek_ubezpieczenia_chorobowego = (self.dochod * self.PROCENT_PODATKU_UBEZPIECZENIA_CHOROBOWEGO) / 100
+        self.podatek_ubezpieczenia_spolecznego = (self.dochod * self.PROCENT_PODATKU_UBEZPIECZENIA_SPOLECZNEGO) / self.PROCENT
+        self.podatek_ubezpieczenia_zdrowotnego_spolecznego = (self.dochod * self.PROCENT_PODATKU_UBEZPIECZENIA_ZDROWOTNEGO_SPOLECZNEGO) / self.PROCENT
+        self.podatek_ubezpieczenia_chorobowego = (self.dochod * self.PROCENT_PODATKU_UBEZPIECZENIA_CHOROBOWEGO) / self.PROCENT
         self._zapisz_podatek_ubezpieczenia_spolecznego()
         self.dochod = self.dochod - self.podatek_ubezpieczenia_spolecznego - self.podatek_ubezpieczenia_zdrowotnego_spolecznego - self.podatek_ubezpieczenia_chorobowego
         self._zapisz_podstawowy_dochod()
@@ -70,4 +71,5 @@ class PodatekPracowniczy(ObliczaniePodatku):
         self._zapisz_dochod_netto()
     
     def _zapisz_dochod_netto(self):
+
         self.dane_podatkowe["Net income"] = self.dochod_netto
